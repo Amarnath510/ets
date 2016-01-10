@@ -1,0 +1,23 @@
+{
+  "name": "ets",
+  "version": "1.0.0",
+  "dependencies": {
+    "bootstrap": "latest",
+    "font-awesome": "fontawesome#~4.5.0",
+    "animate.css": "latest",
+    "angular": "latest",
+    "angular-route": "latest",
+    "angular-animate": "latest",
+    "angular-bootstrap": "latest",
+    "angular-nvd3": "latest",
+    "angular-resource": "1.4.x",
+    "animate.less": "*",
+    "angular-ui-router": "~0.2.15",
+    "jspdf": "latest",
+    "jspdf-autotable": "latest",
+    "ngstorage": "~0.3.10"
+  },
+  "resolutions": {
+    "angular": "1.4.7"
+  }
+}

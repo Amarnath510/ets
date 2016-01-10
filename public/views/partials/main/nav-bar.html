@@ -1,0 +1,36 @@
+<div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+    </button>
+    <!-- ui-sref="services" -->
+    <a class="navbar-brand cursor" ng-click="gotoUrl('/services')">
+        <h1><img class="img-responsive logo" src="images/logo.png" alt="logo"></h1>
+    </a>
+</div>
+<div>
+    <ul class="nav navbar-nav navbar-right white">
+      <li ng-class='{"feature-active" : isActive("/home")}'><a href='' ng-click='gotoUrl("/home")'>Home</a></li>
+      <li ng-class='{"feature-active" : isActive("/services")}'><a href="" ng-click='gotoUrl("/services")'>Service</a></li>
+      <li ng-class='{"feature-active" : isActive("/about")}'><a href="" ng-click='gotoUrl("/about")'>About Us</a></li>
+      <li ng-class='{"feature-active" : isActive("/contact")}'><a href="" ng-click='gotoUrl("/contact")'>Contact</a></li>
+      <li ng-if="!isLogin" ng-class='{"feature-active" : isActive("/login")}'><a href="" ng-click='gotoUrl("/login")'>Login</a></li>
+      <li ng-if="!isLogin" ng-class='{"feature-active" : isActive("/register")}'><a href="" ng-click='gotoUrl("/register")'>Register</a></li>
+      <ul ng-if="isLogin" class="nav navbar-nav cursor">
+          <li class="dropdown">
+              <a data-toggle="dropdown" class="dropdown-toggle" style='color: #ECF83A;'>{{username}}<b class="caret"></b></a>
+              <ul class="dropdown-menu text-center">
+                  <li class='cursor'>
+                      <a ng-click="logout()" style='height: 40px; line-height: 40px;' class='black'>Logout</a>
+                  </li>
+              </ul>
+          </li>
+      </ul>
+    </ul>
+</div>
+
+<!-- Included here since nav-bar is the only html page that is present throught out the application. -->
+<div ng-include="'views/partials/utils/confirm_modal.html'" scope="" onload=""></div>
+<div ng-include="'views/partials/utils/alert_modal.html'" scope="" onload=""></div>

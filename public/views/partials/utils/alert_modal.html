@@ -1,0 +1,35 @@
+<div>
+	<script type="text/ng-template" id="alert_dialog.html">
+
+      <div ng-if="flag == 'Success'" class="modal-header bs-success" style="border-radius: 4px;">
+          <h4 class="modal-title">{{header}}</h4>
+      </div>
+
+      <div ng-if="flag == 'Failure'" class="modal-header bs-danger" style="border-radius: 4px;">
+          <h4 class="modal-title">{{header}}</h4>
+      </div>
+
+      <div class="modal-body">
+          <div class="row">
+            	<div class="col-sm-2 col-sm-offset-1 text-center" style="font-size: 50px">
+                  <span ng-if="flag == 'Success'" class='font-oxygen'>
+                    <span class="glyphicon glyphicon-thumbs-up"></span>
+                  </span>
+                  <span ng-if="flag == 'Failure'" class='font-danger'>
+                    <span class="glyphicon glyphicon-thumbs-down"></span>
+                  </span>
+            	</div>
+    	        <div class="col-sm-8 padding-top-10">
+      	        	<p style='font-size: 16px;' class='padding-top-10'>
+              				{{msg}} <br> {{msg_2}}
+          				</p>
+    	        </div>
+          </div>
+      </div>
+      
+      <div class="modal-footer">
+          <button type="button" class="btn btn-default" ng-click="cancel()">OK</button>
+  	  </div>
+
+	</script>
+</div>

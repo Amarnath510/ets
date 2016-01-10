@@ -1,0 +1,27 @@
+.bs-danger {
+    background-color: #d9534f;
+    color: #FFF;
+}
+
+.bs-primary {
+	background-color: #337ab7;
+	color: #FFF;
+}
+
+.bs-success {
+	background-color: #5cb85c;
+	color: white;
+}
+
+.font-oxygen {
+    color: #028fcc;
+}
+
+.font-danger {
+	color: #d9534f;
+}
+
+.bg-oxygen {
+    background-color: #028fcc;
+    color: #FFF;
+}

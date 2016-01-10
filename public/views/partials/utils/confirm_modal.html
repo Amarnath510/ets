@@ -1,0 +1,34 @@
+<div>
+	<script type="text/ng-template" id="confirm_dialog.html">
+
+      <div class="modal-header bg-oxygen" style="border-radius: 4px;">
+          <h4 class="modal-title">{{header}}</h4>
+      </div>
+
+      <div class="modal-body">
+          <div class="row">
+            	<div class="col-sm-2 col-sm-offset-1 text-center" style="font-size: 60px">
+                  <span ng-if="flag == 'Download'" class='font-oxygen'>
+                    <span class="glyphicon glyphicon-download-alt"></span>
+                  </span>
+                  <span ng-if="flag == 'Email'" class='font-oxygen'>
+                    <span class="glyphicon glyphicon-envelope"></span>
+                  </span>
+            	</div>
+    	        <div class="col-sm-8">
+      	        	<p style='font-size: 16px;' class='padding-top-10'>
+              				{{msg}} <span ng-if="flag == 'Email'" class='font-oxygen'>{{email}} ?</span>
+          				</p>
+    	        </div>
+          </div>
+      </div>
+      
+      <div class="modal-footer">
+          <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="confirm()">
+              <span class="glyphicon glyphicon-ok"></span>  Confirm
+          </button>
+          <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
+  	  </div>
+
+	</script>
+</div>

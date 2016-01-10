@@ -1,0 +1,67 @@
+<div class='container'>
+	<div class="row" style='padding-top: 15%;'>
+	    <div class="col-md-5 col-md-offset-3 bg-login animated fadeInDown">
+	    	<!-- Login Panel - START -->
+	    	<div class='row login-header bg-primary'>
+	    		<div class="col-md-6 col-md-offset-3">
+	    			<h5 class='white'>Please Sign In</h5>
+	    		</div>
+	    	</div>
+
+	    	<div style='padding-top: 10px;'>
+	    		<form id="loginForm" name="loginForm" ng-submit="login()" method="POST" novalidate>
+	                <div class="form-group">
+	                    <p for="username" class="pull-left">Username</p>
+	                    <input 
+	                    		type="email" 
+	                    		ng-model="username_data" 
+	                    		class="form-control" 
+	                    		name="username" 
+	                    		placeholder="example@gmail.com" 
+	                    		ng-focus="clearErrMsg()"
+	                    		autofocus 
+	                    		ng-required="true"
+	                    />
+                    	<span class="red" ng-show="loginForm.username.$dirty && loginForm.username.$invalid">
+                    		<span ng-show="loginForm.username.$error.required">Email is required.</span>
+							<span ng-show="loginForm.username.$error.email">Invalid email address.</span>
+						</span>
+	                </div>
+	                <div class="form-group">
+	                    <p for="password" class="control-label pull-left">Password</p>
+	                    <!-- Do not use password value for name attribute. It is not working for validation -->
+	                    <input 
+	                    		type="password" 
+	                    		name="pwd" 
+	                    		ng-model="pwd_data"
+	                    		class="form-control" 
+	                    		ng-focus="clearErrMsg()"
+	                    		ng-required="true" />
+	                    <a href="" style="float: right;" ng-click="gotoUrl('/forgotPwd')">Forgot Password?</a>
+	                    <span class="red pull-left" ng-show="loginForm.pwd.$dirty">
+	                    	<span ng-show="loginForm.pwd.$error.required">Password is required.</span>
+	                	</span>
+	                </div>
+	                <div style="margin-bottom: 5px;" class="pull-left">
+	                	<span ng-show="login_failed_error" class="red">{{login_failed_error_msg}}</span>
+	                </div>
+	                <div style="margin-top: 25px;">
+	                    <button 
+	                    		type="submit" 
+	                    		class="btn btn-success btn-block" 
+	                    		ng-click="login()" 
+	                    		ng-disabled="loginForm.$invalid"> 
+		                    Login
+	                    </button>
+	                </div>
+		        </form>
+	    	</div>
+	        <!-- Login Panel - END -->
+
+	        <div class='login-footer pull-left'>
+	        	Don't have an account? <a ng-click="gotoUrl('/register')" class='cursor'>Sign Up</a>
+	        </div>
+	    </div>
+	</div>	
+</div>
+

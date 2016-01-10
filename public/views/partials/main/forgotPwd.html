@@ -1,0 +1,81 @@
+<div class='container'>
+	<div class="row" style='padding-top: 15%;'>
+	    <div class="col-md-5 col-md-offset-3 bg-login animated fadeInDown">
+	    	<!-- Login Panel - START -->
+	    	<div class='row login-header bg-primary'>
+	    		<div class="col-md-6 col-md-offset-3">
+	    			<h5 class='white'>Please Reset your password</h5>
+	    		</div>
+	    	</div>
+
+	    	<div style='padding-top: 10px;'>
+	    		<form id="forgotForm" name="forgotForm" method="POST" novalidate>
+	            	<div class="form-group">
+	                    <p for="username" class="control-label">Username</p>
+	                    <input 
+	                    		type="email" 
+	                    		ng-model="regis_uname_data" 
+	                    		class="form-control" 
+	                    		name="regis_uname" 
+	                    		placeholder="example@gmail.com" 
+	                    		ng-focus="clearErrMsg()"
+	                    		autofocus ng-required="true"/>
+	                    	<span class="red" 
+	                    			ng-show="forgotForm.regis_uname.$dirty && forgotForm.regis_uname.$invalid">
+	                    		<span ng-show="forgotForm.regis_uname.$error.required">Email is required.</span>
+								<span ng-show="forgotForm.regis_uname.$error.email">Invalid email address.</span>
+							</span>
+	                </div>
+	                <div class="form-group">
+	                    <p for="password" class="control-label">Password</p>
+	                    <!-- 
+	                    	Do not use password value for name attribute. It is not working for validation
+	                    -->
+	                    <input 
+	                    		type="password" 
+	                    		ng-model="regis_pwd_data"
+	                    		name="regis_pwd" 
+	                    		ng-minlength=6 
+	                    		ng-maxlength=10 
+	                    		class="form-control" 
+	                    		ng-focus="clearErrMsg()"
+	                    		ng-required="true" />
+	                    <span class="red" ng-show="forgotForm.regis_pwd.$dirty">
+	                    	<span ng-show="forgotForm.regis_pwd.$error.required">Password is required.</span>
+	                    	<span ng-show="forgotForm.regis_pwd.$error.minlength">Password should have minimum 6 to maximum 10 characters.</span>
+	                    	<span ng-show="forgotForm.regis_pwd.$error.maxlength">Password too long.</span>
+	                	</span>
+	                </div>
+	                <div class="form-group">
+	                    <p for="password" class="control-label">Confirm Password</p>
+	                    <input 
+	                    		type="password" 
+	                    		class="form-control" 
+	                    		name="regis_confirm_pwd" 
+	                    		ng-model="regis_confirm_data" 
+	                    		ng-minlength=6
+	                    		ng-maxlength=16
+	                    		ng-focus="clearErrMsg()"
+	                    		ng-required="true" />
+	                    <span class="red" ng-show="forgotForm.regis_confirm_pwd.$dirty">
+	                    	<span ng-show="forgotForm.regis_confirm_pwd.$error.required">Password is required.</span>
+	                    	<span ng-show="forgotForm.regis_confirm_pwd.$error.minlength">Password should have minimum 6 to maximum 16 characters.</span>
+	                    	<span ng-show="forgotForm.regis_confirm_pwd.$error.maxlength">Password too long.</span>
+	                	</span>
+	                </div>
+	                <div style="margin-bottom: 5px;">
+	                	<span ng-show="forgot_failed_error" class="red">{{forgot_failed_error_msg}}</span>
+	                </div>
+	                <div>
+	                	<button type= "button" class="btn btn-primary btn-block" ng-disabled="forgotForm.$invalid" ng-click="forgotPwd()">Submit</button>	
+	                </div>
+	            </form>
+	    	</div>
+	        <!-- Login Panel - END -->
+
+	        <div class='login-footer pull-left'>
+	        	Don't have an account? <a ng-click="gotoUrl('/register')" class='cursor'>Sign here</a>
+	        </div>
+	    </div>
+	</div>	
+</div>
