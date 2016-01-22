@@ -123,7 +123,7 @@ angular.module('ExpenseCtrl', []).controller('ExpenseController',
 
     function saveRecord(newRecord) {
         expenseFactory.AddTrans.save({}, newRecord, function(data) {
-            populateData($scope.report_display_date);
+            refreshData();
         }); 
     }
 
@@ -143,6 +143,7 @@ angular.module('ExpenseCtrl', []).controller('ExpenseController',
     function updateRecord(updatedRecord) {
         var toUpdateId = updatedRecord._id;
         expenseFactory.UpdateTransById.save({id: toUpdateId}, updatedRecord, function(data) {
+            refreshData();
         });
     }
 
@@ -162,8 +163,12 @@ angular.module('ExpenseCtrl', []).controller('ExpenseController',
 
     function deleteRecord(deleteId) {
         expenseFactory.DeleteById.delete({id: deleteId}, function(data) {
-            populateData($scope.report_display_date);
+            refreshData();            
         });
+    }
+
+    function refreshData() {
+        populateData($scope.report_display_date);
     }
 
     $scope.checkDesc = function(desc) {
