@@ -6,84 +6,88 @@
 		</div>
 
 		<div class="modal-body">
-			<div class="row">
-				<div class="col-md-2"></div>
-				<div class="col-md-2">
-					<p class="padding-top-10">Date<span class="red">*</span></p>
-				</div>
-				<div class="col-md-5">
-					<div data-date-picker-directive data-ng-model="record.date"></div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-2"></div>
-				<div class="col-md-2">
-					<p class="padding-top-10">Amount<span class="red">*</span></p>
-				</div>
-				<div class="col-md-5">
-					<input  type="text" 
-							class="form-control" 
-							data-ng-model="record.amount"
-							placeholder="Enter maximum of 10 digits"
-							limit="10"
-							only-digits-directive 
-							input-limit-directive
-							ng-focus="clearError()"
-							required>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-2"></div>
-				<div class="col-md-2">
-					<p class="padding-top-10">Type<span class="red">*</span></p>
-				</div>
-				<div class="col-md-5">
-					<div class="btn-group" style="padding-top: 5px;">
-						<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">{{record.type}}
-							<span class="caret"></span>
-						</a>
-						<ul class="dropdown-menu">
-							<li ng-repeat="item in items" class="cursor">
-								<a ng-click="selectDropDown(item, record)">{{item}}</a>
-							</li>
-							<li class="divider"></li>
-							<li class="cursor">
-								<a ng-click="selectDropDown('Miscellaneous', record)">Miscellaneous</a>
-							</li>
-						</ul>
+			<form id="editTransaction" name="editTransaction" ng-submit="update()" method="GET" novalidate>
+				<div class="form-group">
+					<div class="row">
+						<div class="col-md-2"></div>
+						<div class="col-md-2">
+							<p class="padding-top-10">Date<span class="red">*</span></p>
+						</div>
+						<div class="col-md-5">
+							<div data-date-picker-directive data-ng-model="record.date"></div>
+						</div>
 					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div style="padding-top: 10px;">
-					<div class="col-md-2"></div>
-					<div class="col-md-2">
-						<p class="padding-top-10">Description</p>
+					<div class="row">
+						<div class="col-md-2"></div>
+						<div class="col-md-2">
+							<p class="padding-top-10">Amount<span class="red">*</span></p>
+						</div>
+						<div class="col-md-5">
+							<input  type="text" 
+									class="form-control" 
+									data-ng-model="record.amount"
+									placeholder="Enter maximum of 10 digits"
+									limit="10"
+									only-digits-directive 
+									input-limit-directive
+									ng-focus="clearError()"
+									required>
+						</div>
 					</div>
-					<div class="col-md-5">
-						<input  type="text" 
-								class="form-control" 
-								style='padding-top: 10px;' 
-								ng-model="record.desc"
-								placeholder="Enter maximum of 50 characters"
-								limit="50"
-								input-limit-directive
-								ng-focus="clearError()">
+					<div class="row">
+						<div class="col-md-2"></div>
+						<div class="col-md-2">
+							<p class="padding-top-10">Type<span class="red">*</span></p>
+						</div>
+						<div class="col-md-5">
+							<div class="btn-group" style="padding-top: 5px;">
+								<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">{{record.type}}
+									<span class="caret"></span>
+								</a>
+								<ul class="dropdown-menu">
+									<li ng-repeat="item in items" class="cursor">
+										<a ng-click="selectDropDown(item, record)">{{item}}</a>
+									</li>
+									<li class="divider"></li>
+									<li class="cursor">
+										<a ng-click="selectDropDown('Miscellaneous', record)">Miscellaneous</a>
+									</li>
+								</ul>
+							</div>
+						</div>
 					</div>
-				</div>
-			</div>
-			<div class='text-center padding-bottom-10'>
-				<span class="red" ng-show="showError">
-        			<span>{{errorMsg}}</span>
-				</span>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-success" ng-click="update()">
-					<span class="glyphicon glyphicon-save"></span>  Update & Close
-				</button>
-				<button type="button" class="btn btn-default" ng-click="cancel()">Cancel
-				</button>
-			</div>
+					<div class="row">
+						<div style="padding-top: 10px;">
+							<div class="col-md-2"></div>
+							<div class="col-md-2">
+								<p class="padding-top-10">Description</p>
+							</div>
+							<div class="col-md-5">
+								<input  type="text" 
+										class="form-control" 
+										style='padding-top: 10px;' 
+										ng-model="record.desc"
+										placeholder="Enter maximum of 50 characters"
+										limit="50"
+										input-limit-directive
+										ng-focus="clearError()">
+							</div>
+						</div>
+					</div>
+					<div class='text-center padding-bottom-10'>
+						<span class="red" ng-show="showError">
+		        			<span>{{errorMsg}}</span>
+						</span>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-success" ng-click="update()">
+							<span class="glyphicon glyphicon-save"></span> Update & Close
+						</button>
+						<button type="button" class="btn btn-default" ng-click="cancel()">Cancel
+						</button>
+					</div>
+				</div> <!-- form group end ->	
+			</form>
 		</div> <!-- Modal Body end-->
 	</script>
 </div>
