@@ -21,7 +21,7 @@ app.use(session({secret : 'eToolStore',
 				 saveUninitialized: true, 
 				 resave: true,
 				 store: new MongoStore({mongooseConnection: mongoose.connection,
-				 						ttl: 10 * 60 })
+				 						ttl: 30 * 60 })
 				}));
 
 // db configuration file and connect db

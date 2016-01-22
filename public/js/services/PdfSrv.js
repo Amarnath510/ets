@@ -17,8 +17,11 @@ angular.module('PdfSrv', []).service('pdfService', ['clientPropertiesService', '
 		            },
 
 		    beforePageContent: function(data) {
-		        var imgData = imgUriService.getTitleUri();
-		        doc.addImage(imgData, 'JPEG', 40, 30, 100, 30); 
+		        if(hashMap['requestType'] === clientPropertiesService.getDownloadStr()) {
+		        	var imgData = imgUriService.getTitleUri();
+		        	doc.addImage(imgData, 'JPEG', 40, 30, 100, 30); 	
+		        }
+		        
 		        doc.text('Income and Expense for the month of ' + dateStr + '.', 40, 80); 
 		    },
 

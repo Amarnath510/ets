@@ -248,6 +248,8 @@ angular.module('ExpenseCtrl', []).controller('ExpenseController',
                 $scope.loading_download = true;
 
                 var hashMap = expenseService.preparePdfMap($scope.report_display_date, $scope.totalIncome, $scope.totalExpense);
+                hashMap['requestType'] = clientPropertiesService.getDownloadStr();
+
                 var formatedRecords = expenseService.formatDateColumn($scope.records);
                 var doc = pdfService.createPdf(loginService.getUserName(), formatedRecords, hashMap);
                 var fileName = "Expense_Reporting_" + hashMap['dateStr'] + '.pdf';
@@ -266,6 +268,8 @@ angular.module('ExpenseCtrl', []).controller('ExpenseController',
                 $scope.loading_mail = true;
 
                 var hashMap = expenseService.preparePdfMap($scope.report_display_date, $scope.totalIncome, $scope.totalExpense);
+                hashMap['requestType'] = clientPropertiesService.getEmailStr();                
+
                 var formatedRecords = expenseService.formatDateColumn($scope.records);
                 var doc = pdfService.createPdf(loginService.getUserName(), formatedRecords, hashMap);
                 var fileName = "Expense_Reporting_" + hashMap['dateStr'] + '.pdf';
