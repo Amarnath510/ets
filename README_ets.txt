@@ -291,10 +291,10 @@ body {
 		- git remote -v
 		- git push origin master
 
+	* To see the changes type, git status
 
 	* TO UPDATE NEW CHANGES TO THE GITHUB.
 		- git add .
 		- git commit -m "some comments here"
 		- git push origin master
 
-		

@@ -1,5 +1,5 @@
 var User = require('../models/User');
-var bCrypt = require('bCrypt-nodejs');
+var bCrypt = require('bcrypt-nodejs');
 
 module.exports = function(loginRouter) {
 	
