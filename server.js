@@ -37,7 +37,7 @@ mongoose.connect(settings.dburl, function(err) {
 });
 
 // server port
-var port = process.env.PORT || 3000;
+var port = process.env.PORT || 80;
 
 // get data/stuff body parameters
 app.use(bodyParser.json());
