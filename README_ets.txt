@@ -291,10 +291,14 @@ body {
 		- git remote -v
 		- git push origin master
 
-	* To see the changes type, git status
-
 	* TO UPDATE NEW CHANGES TO THE GITHUB.
+		- git status (To see the changes type.)
 		- git add .
 		- git commit -m "some comments here"
 		- git push origin master
 
+	* To pull changes from git 
+		- Before pulling make sure you have no local changes pending to push.
+			If you have any local changes which you don't want and want to rever them back then 
+				git reset --hard <old-commit-id> (old-commit-id is not mandatory.)
+		- git pull origin master
