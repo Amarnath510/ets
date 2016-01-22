@@ -4,7 +4,6 @@ module.exports = function(app) {
 		res.sendfile('./public/views/index.html');
 	});
 
-
 	app.get('/home', function(req, res) {
 		res.sendfile('./public/views/index.html');
 	});
@@ -14,20 +13,18 @@ module.exports = function(app) {
 	});	
 
 	app.get('/services/expensereporting', function(req, res) {
-		if(req.session.username === undefined) {
-			req.session.redirectTo = '/services/expensereporting';
-			res.redirect('/login');
-		} else {
+		if(req.session && req.session.username) { 
 			res.sendfile('./public/views/index.html');
+		} else {
+			res.redirect('/login');
 		}
 	});
 
 	app.get('/remainders', function(req, res) {
-		if(req.session.username === undefined) {
-			req.session.redirectTo = '/remainders';
-			res.redirect('/login');
-		} else {
+		if(req.session && req.session.username) { 
 			res.sendfile('./public/views/index.html');
+		} else {
+			res.redirect('/login');
 		}
 	});
 

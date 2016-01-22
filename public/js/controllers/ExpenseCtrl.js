@@ -277,6 +277,9 @@ angular.module('ExpenseCtrl', []).controller('ExpenseController',
                 var formData = new FormData();
                 formData.append("pdf", uploadData, fileName);
 
+                formData.append('dateStr', hashMap['dateStr']);
+                formData.append('toEmail', loginService.getUserName());
+
                 var request = new XMLHttpRequest();
                 request.open("POST", "/mailapi/sendmail");
                 request.send(formData);

@@ -6,5 +6,6 @@
 module.exports = {
 	'dburl': 'mongodb://127.0.0.1:27017/testDB',
 	'sg_uname': 'Amarnath510', 
-	'sg_pwd': 'Amarnat8'
+	'sg_pwd': 'Amarnat8',
+	'etsEmail': 'amarnath2chandana@gmail.com'
 }

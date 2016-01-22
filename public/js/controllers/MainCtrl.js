@@ -1,7 +1,19 @@
 angular.module('MainCtrl', []).controller('MainController', 
 								function($scope, $uibModal, $location, $localStorage, $state, $window, loginService, loginFactory, clientPropertiesService) {
 
-	$('#myModal').modal({ show: false});									
+	// Initially show login form and hide registerForm
+	$scope.loginForm_show = true;
+	$scope.registerForm_show = false;
+	$scope.login_validation = false;
+
+	// custom error messages
+	$scope.login_failed_error = false;
+	$scope.user_exists_error = false;
+	$scope.pwd_conPwd_error = false;
+	$scope.registration_failed_error = false;
+
+	// error message
+	$scope.login_failed_error_msg = '';
 
 
     $scope.isActive = function(destination) {
@@ -64,7 +76,7 @@ angular.module('MainCtrl', []).controller('MainController',
 		if(url === $location.path()) {
 			$state.reload();
 		} else {
-			if(url === '/services/expensereporting' || url === '/remainders') {
+			if(url === '/services/expensereporting') {
 				loginFactory.IsUserSession.get({}, function(response) {
 					if(!response.result) {
 						$location.url('/login');
@@ -72,26 +84,13 @@ angular.module('MainCtrl', []).controller('MainController',
 						$location.url(url);
 					}
 				});
+			} else if(url === '/services/remainders') {
+
 			} else {
 				$location.url(url);
 			}	
 		}
 	}
-
-	// Initially show login form and hide registerForm
-	$scope.loginForm_show = true;
-	$scope.registerForm_show = false;
-	$scope.login_validation = false;
-
-	// custom error messages
-	$scope.login_failed_error = false;
-	$scope.user_exists_error = false;
-	$scope.pwd_conPwd_error = false;
-	$scope.registration_failed_error = false;
-
-	// error message
-	$scope.login_failed_error_msg = '';
-
 
 	$scope.login = function() {
 		var uname = $scope.username_data;
