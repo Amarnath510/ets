@@ -277,3 +277,24 @@ body {
 - AngularJS Deferred:
 	A deferred object is simply an object that exposes a promise as well as the associated methods for resolving that promise. It is constructed using the $q.deferred().
 	
+
+
+- GIT - Commands:
+	* Create a repository on Github. (Say ets)
+	* You will be given a URL for this created project. https://github.com/Amarnath510/ets.git
+	* Go to the project folder and type the following commands,
+		- git init
+		- git add .
+		- git commit -m "some comments here"
+		- Copy the URL of the project on github.
+		- git remote add origin remote  repository https://github.com/Amarnath510/ets.git
+		- git remote -v
+		- git push origin master
+
+
+	* TO UPDATE NEW CHANGES TO THE GITHUB.
+		- git add .
+		- git commit -m "some comments here"
+		- git push origin master
+
+		
