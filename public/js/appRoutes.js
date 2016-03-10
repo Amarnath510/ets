@@ -37,7 +37,7 @@ angular.module('appRoutes', ['ui.router']).config(['$stateProvider', '$urlRouter
 	 			},
 				'content@about': 
 				{
-					templateUrl: 'views/partials/main/services.html',
+					templateUrl: 'views/partials/main/about.html',
 					controller: 'MainController'
 				}
 			}
@@ -54,7 +54,7 @@ angular.module('appRoutes', ['ui.router']).config(['$stateProvider', '$urlRouter
 	 			},
 				'content@contact': 
 				{
-					templateUrl: 'views/partials/main/services.html',
+					templateUrl: 'views/partials/main/contact.html',
 					controller: 'MainController'
 				}
 			}
@@ -124,6 +124,24 @@ angular.module('appRoutes', ['ui.router']).config(['$stateProvider', '$urlRouter
 				{
 					templateUrl: 'views/partials/services/expenses/expenses_main.html',
 					controller: 'ExpenseController'
+				}
+			}
+		})
+
+
+		.state('remainders', {
+			url: '/services/remainders',
+			views:
+			{
+				'':
+				{
+					templateUrl: 'views/partials/main/main.html',
+					controller: 'MainController'
+				}, 
+				'content@remainders':
+				{
+					templateUrl: 'views/partials/services/remainders/remainders_main.html',
+					controller: 'RemainderController'
 				}
 			}
 		});

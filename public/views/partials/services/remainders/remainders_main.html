@@ -1,0 +1,96 @@
+<div>
+	<div class="container">
+		<div class="text-center">
+			<div class="row" style="padding-top: 40px;">
+				<div class='col-sm-4 col-sm-offset-1'>
+					<button type="button" 
+							class="btn btn-success btn-lg"
+							ng-click="addRemainder()">
+							Add Remainder
+					</button>	
+				</div>
+
+				<!-- <div class='col-sm-3 col-sm-offset-1'>
+					<button type="button" 
+							class="btn btn-primary btn-lg" 
+							ng-disabled="disableRemainders"
+							ng-click="viewAllRemainders()">
+							All Remainder's
+					</button>
+				</div> -->
+
+				<!-- <div class='col-sm-2 col-sm-offset-1'>
+					<button type="button" 
+							class="btn btn-primary btn-lg" 
+							ng-disabled="disableUpcmgRemainders"
+							ng-click="viewUpcomingRemainders()">
+							Upcoming Remainder's
+					</button>
+				</div> -->
+
+				<div class='col-sm-4 col-sm-offset-1'>
+					<button type="button" 
+							class="btn btn-danger btn-lg" 
+							ng-disabled="!records.length > 0"
+							ng-click="deleteRemainders('All')">
+							Delete All Remainder's
+					</button>
+				</div>
+			</div>
+
+			<div class="row margin-top-20">
+				<div class="col-sm-12">
+					<h3 ng-if="records.length > 0">{{remainderHeading}}</h3>
+					<h3 ng-if="records.length <= 0">{{noRemainders}}</h3>
+				</div>	
+			</div>
+
+			<div class="row margin-top-20" ng-if="records.length > 0">
+				<div class="col-sm-12">
+					<table class='table table-bordered' style='font-size: 13px;' >
+					    <thead style='background-color: #C2C2C2'>
+					      <tr>
+					        <th class='text-center col-sm-2'><h5 class="font-16 bold">Date</h5></th>
+					        <th class='text-center col-sm-1'><h5 class="font-16 bold">Time</h5></th>
+					        <th class='text-center col-sm-2'><h5 class="font-16 bold">Type</h5></th>
+					        <th class='text-center col-sm-3'><h5 class="font-16 bold">Description</h5></th>
+					        <th class='text-center col-sm-2'><h5 class="font-16 bold">Email/SMS</h5></th>
+					        <th class='text-center col-sm-1'><h5 class="font-16 bold">Operation</h5></th>
+					      </tr>
+					    </thead>
+					    <tbody>
+					    	<tr ng-repeat="record in records | startFromFilter: (currentPage - 1) * pageSize | limitTo: pageSize">
+								<td>{{record.date | date:'dd-MMM-yyyy'}}</td>
+								<td>{{record.myTime | date:'h:mm a'}}</td>
+								<td>{{record.type}}</td>
+								<td>{{record.desc}}</td>
+								<td>{{record.via}}</td>
+								<td>
+									<div>
+										<button   class="btn btn-primary" 
+												  ng-click="editRemainder(record)"
+												  data-content="Edit" 
+			          							  data-trigger="hover"
+			          							  tool-tip-directive="popover">
+											<span class="glyphicon glyphicon-pencil"></span>
+										</button>
+										<button   class="btn btn-danger" 
+										 		  ng-click="deleteRemainders('One', record)"
+										 		  data-content="Delete" 
+			          							  data-trigger="hover"
+			          							  tool-tip-directive="popover">
+											<span class="glyphicon glyphicon-trash"></span>
+										</button>
+									</div>
+								</td>
+							</tr>
+					    </tbody>
+					</table>
+				</div>
+				<uib-pagination total-items="records.length" ng-model="currentPage" items-per-page="pageSize"></uib-pagination>	
+			</div>
+		</div>
+	</div>	
+</div>
+
+<div ng-include="'views/partials/services/remainders/remainder_modal.html'" scope="" onload=""></div>

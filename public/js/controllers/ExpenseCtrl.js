@@ -1,10 +1,10 @@
 angular.module('ExpenseCtrl', []).controller('ExpenseController', 
                     function($scope, $location, $state, $uibModal, $localStorage, 
-                             expenseService, clientPropertiesService, expenseFactory, 
-                             dateService, loginService, pdfService, modalService) {
+                             expenseService, clientProperties, expenseProperties, expenseFactory, 
+                             dateService, loginService, pdfService, modalService, clientService) {
 
-    $scope.format = clientPropertiesService.getDateFormat();
-    $scope.pageSize = clientPropertiesService.getExpPageSize();
+    $scope.format = expenseProperties.getDateFormat();
+    $scope.pageSize = expenseProperties.getExpPageSize();
 
     $scope.open = function() {
         $scope.status.opened = true;
@@ -24,12 +24,13 @@ angular.module('ExpenseCtrl', []).controller('ExpenseController',
         $scope.report_display_date = $scope.reportDate;
 
         // save the date in the service as we will be using this in Modal dialog.
-        expenseService.saveModalDate($scope.reportDate);
+        // We need month and year to show the min and max date for Modal dialog's date.
+        expenseService.setModalDate($scope.reportDate);
         populateData($scope.report_display_date);
 
         /* Charts code BEGIN */
-        $scope.pieChartOptions = clientPropertiesService.getPieChartOptions();
-        $scope.barChartOptions = clientPropertiesService.getBarChartOptions();
+        $scope.pieChartOptions = expenseProperties.getPieChartOptions();
+        $scope.barChartOptions = expenseProperties.getBarChartOptions();
         /* Charts code END */
     };
 
@@ -45,7 +46,8 @@ angular.module('ExpenseCtrl', []).controller('ExpenseController',
             $scope.report_display_date = expenseService.getCurrentReportDate();
 
             // When ever date is been refreshed then we need to use the same date in Modal too.
-            expenseService.saveModalDate($scope.reportDate);
+            // We need month and year to show the min and max date for Modal dialog's date.
+            expenseService.setModalDate($scope.reportDate);
             populateData($scope.report_display_date);
         }
     };
@@ -93,11 +95,20 @@ angular.module('ExpenseCtrl', []).controller('ExpenseController',
         $scope.barApi.refresh();
     }
 
+
+    /**
+        NOTE: When ever income/expense/edit/remainder dialog is been opened make sure you set the currentServiceType in clientService to the service type which you are using.
+    */
 	$scope.openTransactionModal = function(flag) {
+
+        // Since we are using this modal for expense reporting so we will set the service type in client service.
+        clientService.setCurrentServiceType(clientProperties.getExpenseReportingService());
+
         var record = new Object();
+        record.serviceType = clientProperties.getExpenseReportingService();
         // default value of drop down menu
         record.type = 'Type';
-        if(flag === clientPropertiesService.getIncomeStr()) {
+        if(flag === expenseProperties.getIncomeStr()) {
             record.incorexp = 'Income';
         } else {
             record.incorexp = 'Expense';
@@ -113,21 +124,19 @@ angular.module('ExpenseCtrl', []).controller('ExpenseController',
             // keyboard: false, 
 			resolve: {record: record}
 		}).result.then(function(newRecord) {
-            if(loginService.getLoginStatus()) {
-                saveRecord(newRecord);
-            } else {
-                $location.url('/login');
-            }
+            expenseFactory.AddTrans.save({}, newRecord, function(data) {
+                refreshData();
+            });     
         });
 	};
 
-    function saveRecord(newRecord) {
-        expenseFactory.AddTrans.save({}, newRecord, function(data) {
-            refreshData();
-        }); 
-    }
-
+    /**
+        NOTE: When ever income/expense/edit/remainder dialog is been opened make sure you set the currentServiceType in clientService to the service type which you are using.
+    */
 	$scope.openEditModal = function(editRecord) {
+
+        editRecord.serviceType = clientProperties.getExpenseReportingService();
+
 		$uibModal.open({
 			templateUrl: 'edit_dialog.html',
 			controller: 'ModalController',
@@ -148,13 +157,16 @@ angular.module('ExpenseCtrl', []).controller('ExpenseController',
     }
 
     $scope.delete = function(record) {
+        var data = new Object();
+        data.serviceType = clientProperties.getExpenseReportingService();
+
         $uibModal.open({
             templateUrl: 'delete_dialog.html',
-            controller: 'ModalController',
+            controller: 'deleteController',
             backdrop: 'static',
             // keyboard: false,
             resolve: {
-                record: record
+                data: data
             }
         }).result.then(function() {
             deleteRecord(record._id);
@@ -205,17 +217,17 @@ angular.module('ExpenseCtrl', []).controller('ExpenseController',
 
         if(date == undefined || date != null || date.trim().length == 0) {
             valObj.result = false;
-            valObj.msg = clientPropertiesService.getMsgTransDateMissing();
+            valObj.msg = expenseProperties.getMsgTransDateMissing();
         }
 
         if(amount != undefined || amount != null || amount.trim().length == 0) {
             valObj.result = false;
-            valObj.msg = clientPropertiesService.getMsgTransAmountMissing();
+            valObj.msg = expenseProperties.getMsgTransAmountMissing();
         }
 
-        if(type != undefined || type != null || type === clientPropertiesService.getDefaultType()) {
+        if(type != undefined || type != null || type === expenseProperties.getDefaultType()) {
             valObj.result = false;
-            valObj.msg = clientPropertiesService.getMsgTransTypeMissing();
+            valObj.msg = expenseProperties.getMsgTransTypeMissing();
         }
 
         return valObj;
@@ -224,6 +236,8 @@ angular.module('ExpenseCtrl', []).controller('ExpenseController',
     $scope.confirmAction = function(flag) {
         var date = $scope.report_display_date;
         var data = new Object();
+
+        data.serviceType = clientProperties.getExpenseReportingService();
         data.flag = flag;
         data.month = dateService.getMonthName( dateService.getMonth(date) );
         data.year = dateService.getYear(date);
@@ -238,9 +252,9 @@ angular.module('ExpenseCtrl', []).controller('ExpenseController',
                 data: data
             }
         }).result.then(function() {
-            if(flag == clientPropertiesService.getDownloadStr()) {
+            if(flag == expenseProperties.getDownloadStr()) {
                 downloadPdf();
-            } else if(flag == clientPropertiesService.getEmailStr()) {
+            } else if(flag == expenseProperties.getEmailStr()) {
                 sendEmail();
             }
         });
@@ -253,7 +267,7 @@ angular.module('ExpenseCtrl', []).controller('ExpenseController',
                 $scope.loading_download = true;
 
                 var hashMap = expenseService.preparePdfMap($scope.report_display_date, $scope.totalIncome, $scope.totalExpense);
-                hashMap['requestType'] = clientPropertiesService.getDownloadStr();
+                hashMap['requestType'] = expenseProperties.getDownloadStr();
 
                 var formatedRecords = expenseService.formatDateColumn($scope.records);
                 var doc = pdfService.createPdf(loginService.getUserName(), formatedRecords, hashMap);
@@ -272,8 +286,10 @@ angular.module('ExpenseCtrl', []).controller('ExpenseController',
 
                 $scope.loading_mail = true;
 
-                var hashMap = expenseService.preparePdfMap($scope.report_display_date, $scope.totalIncome, $scope.totalExpense);
-                hashMap['requestType'] = clientPropertiesService.getEmailStr();                
+                var hashMap = expenseService.preparePdfMap($scope.report_display_date, 
+                                                                $scope.totalIncome, 
+                                                                    $scope.totalExpense);
+                hashMap['requestType'] = expenseProperties.getEmailStr();                
 
                 var formatedRecords = expenseService.formatDateColumn($scope.records);
                 var doc = pdfService.createPdf(loginService.getUserName(), formatedRecords, hashMap);
@@ -296,7 +312,7 @@ angular.module('ExpenseCtrl', []).controller('ExpenseController',
                 request.onreadystatechange = function() {
                     if (request.readyState == 4 && request.status == 200) {
                        $scope.loading_mail = false;                        
-                       alertDialog(request.responseText, clientPropertiesService.getEmailStr());
+                       alertDialog(request.responseText, expenseProperties.getEmailStr());
                     }
                 };
             }
@@ -306,9 +322,10 @@ angular.module('ExpenseCtrl', []).controller('ExpenseController',
     function alertDialog(response, type) {
 
         var newData = new Object();
-        newData.flag = clientPropertiesService.getAlertStr();
+        newData.flag = clientProperties.getAlertStr();
         newData.status = response;
         newData.type = type;
+        newData.serviceType = clientProperties.getExpenseReportingService();
 
         $uibModal.open({
             templateUrl: 'alert_dialog.html',
@@ -326,7 +343,7 @@ angular.module('ExpenseCtrl', []).controller('ExpenseController',
     function loadingDialog() {
 
         var newData = new Object();
-        newData.flag = clientPropertiesService.getLoadingStr();
+        newData.flag = clientProperties.getLoadingStr();
 
         $uibModal.open({
             templateUrl: 'loading_dialog.html',

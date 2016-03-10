@@ -32,7 +32,8 @@ module.exports = function(emailRoute) {
 			form.on('end', function() {
 				mFilePath = this.openedFiles[0].path;
 
-				sendgrid.send({
+				sendgrid.send(
+				{
 					to: toEmail,
 					from: settings.etsEmail,
 					subject: 'Expense Report for the month of' + ' ' + dateStr,

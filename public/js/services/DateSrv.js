@@ -28,4 +28,12 @@ angular.module('DateSrv', []).service('dateService', function() {
         return monthNames[monthNumber - 1];
 	}
 
+	/*
+		Check whether both the given date's are same or not.
+		If given date is greater than the current date then accept else throw error.
+	*/
+	this.areDatesEqual = function(enteredDate, todayDate) {
+  		return enteredDate > todayDate;
+	}
+
 });

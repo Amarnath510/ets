@@ -230,8 +230,24 @@ html, body {
     padding-top: 10px;
 }
 
+.padding-top-20 {
+    padding-top: 20px;
+}
+
 .padding-bottom-10 {
     padding-bottom: 10px;
+}
+
+.padding-bottom-20 {
+    padding-bottom: 20px;
+}
+
+.padding-left-20 {
+    padding-left: 20px;
+}
+
+.padding-right-20 {
+    padding-right: 20px;
 }
 
 .bg-login {
@@ -267,4 +283,41 @@ html, body {
 @keyframes spin {
     from { transform: scale(1) rotate(0deg);}
     to { transform: scale(1) rotate(360deg);}
+}
+
+
+.margin-top-10 {
+    margin-top: 10px;
+}
+
+.margin-top-20 {
+    margin-top: 50px;
+}
+
+.font-16 {
+    font-size: 16px;
+}
+
+.font-32 {
+    font-size: 32px;
+}
+
+.bold {
+    font-weight: 600;
+}
+
+.inline-block {
+    display: inline-block;
+}
+
+.thin-border {
+    outline: 1px solid black;
+}
+
+.thick-border {
+    outline: 2px solid black;
+}
+
+.text-left {
+    text-align: left;
 }

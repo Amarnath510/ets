@@ -1,5 +1,5 @@
 angular.module('MainCtrl', []).controller('MainController', 
-								function($scope, $uibModal, $location, $localStorage, $state, $window, loginService, loginFactory, clientPropertiesService) {
+								function($scope, $uibModal, $location, $localStorage, $state, $window, loginService, loginFactory, clientProperties, clientService) {
 
 	// Initially show login form and hide registerForm
 	$scope.loginForm_show = true;
@@ -57,7 +57,7 @@ angular.module('MainCtrl', []).controller('MainController',
 
 	$scope.logout = function() {
 		loginFactory.Logout.get(function(response) {
-			if(response.result === clientPropertiesService.getSuccess()) {
+			if(response.result === clientProperties.getSuccess()) {
 				
 				// clear all the local storage data
 				loginService.setLoginStatus(false);
@@ -76,7 +76,7 @@ angular.module('MainCtrl', []).controller('MainController',
 		if(url === $location.path()) {
 			$state.reload();
 		} else {
-			if(url === '/services/expensereporting') {
+			if(url === '/services/expensereporting' || url === '/services/remainders') {
 				loginFactory.IsUserSession.get({}, function(response) {
 					if(!response.result) {
 						$location.url('/login');
@@ -84,7 +84,6 @@ angular.module('MainCtrl', []).controller('MainController',
 						$location.url(url);
 					}
 				});
-			} else if(url === '/services/remainders') {
 
 			} else {
 				$location.url(url);
@@ -101,9 +100,9 @@ angular.module('MainCtrl', []).controller('MainController',
 		user.password = pwd;
 
 		loginFactory.UserLogin.save({}, user, function(response) {
-			if(response.result === clientPropertiesService.getFailure()) {
+			if(response.result === clientProperties.getFailure()) {
 				$scope.login_failed_error = true;
-				$scope.login_failed_error_msg = clientPropertiesService.getMsgWrongCredentials();							
+				$scope.login_failed_error_msg = clientProperties.getMsgWrongCredentials();							
 			} else {
 				// set username in the service and then close the login modal.
 				loginService.setLoginStatus(true);
@@ -120,19 +119,19 @@ angular.module('MainCtrl', []).controller('MainController',
 
 		if(pwd != confirm_pwd) {
 			$scope.registration_failed_error = true;
-			$scope.registration_failed_error_msg = clientPropertiesService.getMsgPwdCfmMismatch();
+			$scope.registration_failed_error_msg = clientProperties.getMsgPwdCfmMismatch();
 		} else {
 			var user = new Object();
 			user.username = uname;
 			user.password = pwd;
 
 			loginFactory.UserRegistration.save({}, user, function(status) {
-				if(status.result === clientPropertiesService.getUserExists()) {
+				if(status.result === clientProperties.getUserExists()) {
 					$scope.registration_failed_error = true;
-					$scope.registration_failed_error_msg = clientPropertiesService.getMsgUserAlreadyExists();
-				} else if(status.result === clientPropertiesService.getSaveFailed()) {
+					$scope.registration_failed_error_msg = clientProperties.getMsgUserAlreadyExists();
+				} else if(status.result === clientProperties.getSaveFailed()) {
 					$scope.registration_failed_error = true;
-					$scope.registration_failed_error_msg = clientPropertiesService.getMsgUserSaveFailed();
+					$scope.registration_failed_error_msg = clientProperties.getMsgUserSaveFailed();
 				} else {
 					// set username in the service and then close the login modal.
 					loginService.setLoginStatus(true);
@@ -159,22 +158,22 @@ angular.module('MainCtrl', []).controller('MainController',
 
 		if(pwd != confirm_pwd) {
 			$scope.forgot_failed_error = true;
-			$scope.forgot_failed_error_msg = clientPropertiesService.getMsgPwdCfmMismatch();
+			$scope.forgot_failed_error_msg = clientProperties.getMsgPwdCfmMismatch();
 		} else {
 			var user = new Object();
 			user.username = uname;
 			user.password = pwd;
 
 			loginFactory.UpdateUserPwd.save({}, user, function(response) {
-				if(response.result === clientPropertiesService.getSuccess()) {
+				if(response.result === clientProperties.getSuccess()) {
 					// instead of redirecting, close the forgot pwd window and show the login page.
 					$location.url('/login');
 				} else {
 					$scope.forgot_failed_error = true;
-					if(response.result === clientPropertiesService.getSaveFailed()) {
-						$scope.forgot_failed_error_msg = clientPropertiesService.getSaveFailed();
+					if(response.result === clientProperties.getSaveFailed()) {
+						$scope.forgot_failed_error_msg = clientProperties.getSaveFailed();
 					} else {
-						$scope.forgot_failed_error_msg = clientPropertiesService.getMsgNoUserErr();
+						$scope.forgot_failed_error_msg = clientProperties.getMsgNoUserErr();
 					}
 				}
 			});
@@ -184,6 +183,38 @@ angular.module('MainCtrl', []).controller('MainController',
 	function validateEmail(email) {
     	var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
     	return re.test(email);
+	}
+
+	$scope.contactSubmit = function() {
+		$scope.contactMsg = "";
+		var name = $scope.contact_name;
+		var comment = $scope.comment;
+		var verCode = $scope.verCode;
+		var email = $scope.contact_email;
+
+		if(validateComment(name, comment, verCode, email)) {
+			var data = new Object();
+			data.name = name;
+			data.email = email;
+			data.comment = comment;
+
+			loginFactory.AddComment.save({}, data, function(response) {
+				if(clientService.equals(response.result, clientProperties.getSuccess())) {
+					$scope.contactMsg = clientProperties.getMsgCommentSent();
+				}
+			});
+		} else {
+			$scope.contactMsg = clientProperties.getMsgCommentError();
+		}
+	}
+
+	function validateComment(name, comment, verCode, email) {
+		var nameVal = clientService.isMinLength(name, 0);
+		var commentVal = clientService.isMinLength(comment, 0)
+		var verCodeVal = (verCode == 9) ? true : false;
+		var emailVal = validateEmail(email);
+
+		return nameVal && commentVal && verCodeVal && email;
 	}
 
 });

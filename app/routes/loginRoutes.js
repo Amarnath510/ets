@@ -1,4 +1,5 @@
 var User = require('../models/User');
+var Comment = require('../models/Comment');
 var bCrypt = require('bcrypt-nodejs');
 
 module.exports = function(loginRouter) {
@@ -33,7 +34,7 @@ module.exports = function(loginRouter) {
 
 	/* Check all users for registration */
 	loginRouter.post('/userregistration', function(req, res) {
-		if(req.session && req.session.username) { 
+		if(req.session) { 
 			User.findOne({username: req.body.username}, function(err, data) {
 				// For Registration, check whether the user exists or not.
 				var result = 'Success';
@@ -179,6 +180,24 @@ module.exports = function(loginRouter) {
 			});
 		} else {
 			res.redirect('/login');
+		}
+	});
+
+	/* No need to login to send comments. Session will be good enough. */
+	loginRouter.post('/addComment', function(req, res) {
+		if(req.session) {
+			var com = new Comment();
+			com.name = req.body.name;
+			com.email = req.body.email;
+			com.comment = req.body.comment;
+
+			var result = "Success";
+			com.save(function(err, data) {
+				if(err) {
+					result = "Failure";
+				}
+				res.json({'result' : result});
+			});
 		}
 	});
 

@@ -5,7 +5,7 @@ angular.module('DatePickerDir', []).directive('datePickerDirective', function() 
 			date: '=ngModel'
 		},
 		templateUrl: '/views/partials/utils/datePicker.html',
-		controller: function($scope, $filter, expenseService, dateService) {
+		controller: function($scope, $filter, expenseService, dateService, clientService, clientProperties, remainderService) {
 			// On click of date icon we need to show the date picker.
 			// But before doing this make sure we have made opened as false for status.
 			$scope.open = function() {
@@ -24,19 +24,20 @@ angular.module('DatePickerDir', []).directive('datePickerDirective', function() 
 				showWeeks: false
 			}
 
-			var reportDate = expenseService.getModalDate();
-			var year = dateService.getYear(reportDate);
-			var month = dateService.getMonth(reportDate);
-			
-			// Set the month and year and get the date and then set day to 1st day of the month.
-			$scope.minDate = dateService.createDate(year, month, 0);
-			$scope.minDate = dateService.setToFirstDayOfMonth($scope.minDate);
-
-			$scope.maxDate = dateService.createDate(year, month, 0);
-
-			// finally make the fist day as the default date in the modal.
-			// $scope.date = $scope.minDate;
-
+			if(clientService.getCurrentServiceType() === clientProperties.getExpenseReportingService()) {
+				var reportDate = expenseService.getModalDate();
+				var year = dateService.getYear(reportDate);
+				var month = dateService.getMonth(reportDate);
+				
+				// Calculate minimum date
+				// Set the month and year and get the date and then set day to 1st day of the month.
+				$scope.minDate = dateService.createDate(year, month, 0);
+				$scope.minDate = dateService.setToFirstDayOfMonth($scope.minDate);
+				$scope.maxDate = dateService.createDate(year, month, 0);	
+			} else if(clientService.getCurrentServiceType() === clientProperties.getRemaindersService()) {
+				// Min date will be today.
+				$scope.minDate = new Date();
+			}
 		} // controller
 	}; // return
 }); // directive

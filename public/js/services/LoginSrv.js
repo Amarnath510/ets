@@ -1,5 +1,5 @@
 angular.module('LoginSrv', []).service('loginService', 
-							['$rootScope', 'loginFactory', 'clientPropertiesService', function($rootScope, loginFactory, clientPropertiesService) {
+							['$rootScope', 'loginFactory', 'clientProperties', function($rootScope, loginFactory, clientProperties) {
 
 	var loginStatus = false;
 	var username = '';
@@ -58,8 +58,9 @@ angular.module('LoginSrv', []).service('loginService',
 			if(response && response.length > 0) {
 				callback(response);
 			} else {
-				callback(clientPropertiesService.getFailure());
+				callback(clientProperties.getFailure());
 			}
 		});
 	}
+
 }]);

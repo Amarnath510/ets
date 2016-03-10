@@ -74,6 +74,16 @@ var emailapi = express.Router();
 require('./app/routes/emailRoutes')(emailapi);
 app.use('/mailapi', emailapi);
 
+// For Remainder calls
+var remainderapi = express.Router();
+require('./app/routes/remainderRoutes')(remainderapi);
+app.use('/remapi', remainderapi);
+
+// For SMS calls
+var smsapi = express.Router();
+require('./app/routes/smsRoutes')(smsapi);
+app.use('/smsapi', smsapi);
+
 // Start the app
 app.listen(port);
 

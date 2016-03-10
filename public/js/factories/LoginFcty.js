@@ -9,6 +9,7 @@ angular.module('LoginFcty', []).factory('loginFactory', ['$resource', function($
 		UserRegistration:   $resource('/api/userregistration'),
 		Logout: 			$resource('/api/logout'),
 		IsUserSession: 		$resource('/api/isusersession'),
-		UpdateUserPwd: 		$resource('/api/updateuserpwd')
+		UpdateUserPwd: 		$resource('/api/updateuserpwd'),
+		AddComment: 		$resource('/api/addComment')
 	}
 }]);

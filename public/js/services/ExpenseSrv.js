@@ -1,10 +1,11 @@
-angular.module('ExpenseSrv', []).service('expenseService', ['clientPropertiesService', 'dateService', 'expenseFactory', '$filter', function(clientPropertiesService, dateService, expenseFactory, $filter) {
+angular.module('ExpenseSrv', []).service('expenseService', ['clientProperties', 'expenseProperties', 'dateService', 'expenseFactory', '$filter', 
+							function(clientProperties, expenseProperties, dateService, expenseFactory, $filter) {
 	
 	// Min date and Max date are dependent on the expense top date.
 	// Make sure the month limit in modal window same as top date.
 	var date_modal;
 
-	this.saveModalDate = function(date) {
+	this.setModalDate = function(date) {
 		date_modal = date;
 	};
 
@@ -23,10 +24,10 @@ angular.module('ExpenseSrv', []).service('expenseService', ['clientPropertiesSer
 
 	// Get drop down items in modal depending on income or expense
 	this.getItems = function(flag) {
-		if(flag.toUpperCase() === clientPropertiesService.getIncomeStr().toUpperCase()) {
-			return clientPropertiesService.getIncomeItems();
+		if(flag.toUpperCase() === expenseProperties.getIncomeStr().toUpperCase()) {
+			return expenseProperties.getIncomeItems();
 		} else {
-			return clientPropertiesService.getExpenseItems();
+			return expenseProperties.getExpenseItems();
 		}
 	};
 
@@ -44,7 +45,7 @@ angular.module('ExpenseSrv', []).service('expenseService', ['clientPropertiesSer
 	this.calIncome = function(data) {
 		var totalIncome = 0;
 		for(i = 0; i < data.length; i++) {
-			if(data[i].incorexp.toUpperCase() === clientPropertiesService.getIncomeStr().toUpperCase()) {
+			if(data[i].incorexp.toUpperCase() === expenseProperties.getIncomeStr().toUpperCase()) {
 				totalIncome += parseInt(data[i].amount);
 			}
 		}
@@ -55,7 +56,7 @@ angular.module('ExpenseSrv', []).service('expenseService', ['clientPropertiesSer
 	this.calExpense = function(data) {
 		var totalExpense = 0;
 		for(i = 0; i < data.length; i++) {
-			if(data[i].incorexp.toUpperCase() === clientPropertiesService.getExpenseStr().toUpperCase()) {
+			if(data[i].incorexp.toUpperCase() === expenseProperties.getExpenseStr().toUpperCase()) {
 				totalExpense += parseInt(data[i].amount);
 			}
 		}
@@ -67,7 +68,7 @@ angular.module('ExpenseSrv', []).service('expenseService', ['clientPropertiesSer
 		var pieData = new Array();
 		for(i = 0; i < data.length; i++) {
 			var success = false;
-			if(data[i].incorexp.toUpperCase() === clientPropertiesService.getExpenseStr().toUpperCase()) {
+			if(data[i].incorexp.toUpperCase() === expenseProperties.getExpenseStr().toUpperCase()) {
 				var key = data[i].type;
 				var value = parseInt(data[i].amount);
 
@@ -99,9 +100,9 @@ angular.module('ExpenseSrv', []).service('expenseService', ['clientPropertiesSer
 		var chart_data = new Array();
 
 		for(i = 0; i < data.length; i++) {
-			if(data[i].incorexp.toUpperCase() === clientPropertiesService.getIncomeStr().toUpperCase()) {
+			if(data[i].incorexp.toUpperCase() === expenseProperties.getIncomeStr().toUpperCase()) {
 				chart_income += parseInt(data[i].amount);
-			} else if(data[i].incorexp.toUpperCase() === clientPropertiesService.getExpenseStr().toUpperCase()) {
+			} else if(data[i].incorexp.toUpperCase() === expenseProperties.getExpenseStr().toUpperCase()) {
 				chart_expense += parseInt(data[i].amount);
 			}
 		}
@@ -114,9 +115,9 @@ angular.module('ExpenseSrv', []).service('expenseService', ['clientPropertiesSer
 			{
 				'key': "Cumulative Return",
 				'values': [
-					{'label': clientPropertiesService.getIncomeStr(), 'value': chart_income},
-					{'label': clientPropertiesService.getExpenseStr(), 'value': chart_expense},
-					{'label': clientPropertiesService.getSavingsStr(), 'value': chart_savings}
+					{'label': expenseProperties.getIncomeStr(), 'value': chart_income},
+					{'label': expenseProperties.getExpenseStr(), 'value': chart_expense},
+					{'label': expenseProperties.getSavingsStr(), 'value': chart_savings}
 				]
 			}
 		];
@@ -143,14 +144,13 @@ angular.module('ExpenseSrv', []).service('expenseService', ['clientPropertiesSer
 		reverseSort = revSort;
 	};
 
-
 	this.validateRecord = function(record) {
 		var status = new Object();
 
 		if(record.amount === undefined || record.amount.trim().length == 0) {
 			status.msg = 'Amount cannot be empty.';
 			status.flag = false;
-		} else if(record.type === clientPropertiesService.getDefaultType()) {
+		} else if(record.type === expenseProperties.getDefaultType()) {
 			status.msg = 'Please select a valid type from drop down menu.';
 			status.flag = false;
 		} else {

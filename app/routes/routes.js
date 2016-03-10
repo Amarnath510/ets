@@ -20,7 +20,7 @@ module.exports = function(app) {
 		}
 	});
 
-	app.get('/remainders', function(req, res) {
+	app.get('/services/remainders', function(req, res) {
 		if(req.session && req.session.username) { 
 			res.sendfile('./public/views/index.html');
 		} else {
@@ -35,5 +35,13 @@ module.exports = function(app) {
 	app.get('/register', function(req, res) {
 		res.sendfile('./public/views/index.html');
 	});
+
+	app.get('/about', function(req, res) {
+		res.sendfile('./public/views/index.html');
+	});
+
+	app.get('/contact', function(req, res) {
+		res.sendfile('./public/views/index.html');
+	});	
 
 };

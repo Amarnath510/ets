@@ -1,7 +1,7 @@
-angular.module('PdfSrv', []).service('pdfService', ['clientPropertiesService', 'imgUriService', 'loginService', function(clientPropertiesService, imgUriService, loginService) {
+angular.module('PdfSrv', []).service('pdfService', ['expenseProperties', 'imgUriService', 'loginService', function(expenseProperties, imgUriService, loginService) {
 	
 	this.createPdf = function(username, tableRows, hashMap) {
-		var columns = clientPropertiesService.getPdfCols();
+		var columns = expenseProperties.getPdfCols();
 		var rows = tableRows;
 		
 		var dateStr = hashMap['dateStr'];
@@ -17,7 +17,7 @@ angular.module('PdfSrv', []).service('pdfService', ['clientPropertiesService', '
 		            },
 
 		    beforePageContent: function(data) {
-		        if(hashMap['requestType'] === clientPropertiesService.getDownloadStr()) {
+		        if(hashMap['requestType'] === expenseProperties.getDownloadStr()) {
 		        	var imgData = imgUriService.getTitleUri();
 		        	doc.addImage(imgData, 'JPEG', 40, 30, 100, 30); 	
 		        }

@@ -1,0 +1,122 @@
+<div>
+	<script type="text/ng-template" id="remainder_dialog.html">
+		<div class="modal-header bg-oxygen border-radius-4">
+			<h4 class="modal-title">{{record.headerValue}}</h4>
+		</div>
+		<div class="modal-body">
+			<form id="transaction" name="remainderForm" ng-submit="saveRemainder()" method="GET" novalidate>
+				<div class="form-group">
+					<div class="row">
+						<div class="col-sm-2 col-sm-offset-2">
+							<p class="popup-label padding-top-10">Date<span class="red">*</span></p>
+						</div>
+						<div class="col-md-5">
+							<div data-date-picker-directive ng-model="record.date">
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-sm-2 col-sm-offset-2">
+							<p class="popup-label padding-top-10" style="padding-top: 40px;">Time<span class="red">*</span></p>
+						</div>
+						<div class="col-md-5">
+							<div data-time-picker-directive ng-model="record.myTime">
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-sm-2 col-sm-offset-2">
+							<p class="popup-label padding-top-10">Type<span class="red">*</span></p>
+						</div>
+						<div class="col-md-5">
+							<div class="btn-group" style="padding-top: 5px;">
+								<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" ng-focus="clearError()">
+									{{record.type}}
+									<span class="caret"></span>
+								</a>
+								<ul class="dropdown-menu">
+									<li ng-repeat="item in items" class="cursor">
+										<a ng-click="selectDropDown(item)">{{item}}</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+
+					<div class="row" style="padding-top: 10px;">
+						<div>
+							<div class="col-sm-2 col-sm-offset-2">
+								<p class="popup-label padding-top-10">Description<span class="red">*</span></p>
+							</div>
+							<div class="col-md-5">
+								<input 
+										type="text" 
+										class="form-control" 
+										name="description" 
+										style='padding-top: 10px;' 
+										ng-model="record.desc"
+										placeholder="Enter maximum of 50 characters"
+										limit="50"
+										input-limit-directive
+										ng-focus="clearError()"/>
+							</div>
+						</div>
+					</div>	
+
+					<div class="row">
+						<div class="col-sm-2 col-sm-offset-2">
+							<p class="popup-label padding-top-10">via<span class="red">*</span></p>
+						</div>
+						<div class="col-md-5">
+							<div class="btn-group" style="padding-top: 5px;">
+								<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" ng-focus="clearError()">
+									{{record.via}}
+									<span class="caret"></span>
+								</a>
+								<ul class="dropdown-menu">
+									<li ng-repeat="item in viaItems" class="cursor">
+										<a ng-click="selDropDownVia(item)">{{item}}</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+
+					<div class="row" ng-if="showSmsInput">
+						<div class="col-sm-2 col-sm-offset-2">
+							<p class="popup-label padding-top-10">Mobile Number<span class="red">*</span></p>
+						</div>
+						<div class="col-md-5">
+							<div style="padding-top: 15px;">
+								<input type="text" 
+								   class="form-control"
+								   ng-model="record.mobile"	
+								   placeholder="Enter 10 digit mobile number"
+								   limit="10"
+								   only-digits-directive 
+								   input-limit-directive
+								   required/>	
+							</div>
+						</div>
+					</div>
+
+					<div class='text-center padding-bottom-10'>
+						<span class="red" ng-show="showError">
+                			<span>{{errorMsg}}</span>
+						</span>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-success">
+							<span class="glyphicon glyphicon-save"></span> Save & Close
+						</button>
+						
+						<button type="button" class="btn btn-default" ng-click="cancel()">Cancel
+						</button>
+					</div>
+				</div>
+			</form>	
+		</div>
+	</script>
+</div>

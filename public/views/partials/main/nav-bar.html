@@ -14,7 +14,7 @@
     <ul class="nav navbar-nav navbar-right white">
       <li ng-class='{"feature-active" : isActive("/home")}'><a href='' ng-click='gotoUrl("/home")'>Home</a></li>
       <li ng-class='{"feature-active" : isActive("/services")}'><a href="" ng-click='gotoUrl("/services")'>Service</a></li>
-      <li ng-class='{"feature-active" : isActive("/about")}'><a href="" ng-click='gotoUrl("/about")'>About Us</a></li>
+      <li ng-class='{"feature-active" : isActive("/about")}'><a href="" ng-click='gotoUrl("/about")'>About Me</a></li>
       <li ng-class='{"feature-active" : isActive("/contact")}'><a href="" ng-click='gotoUrl("/contact")'>Contact</a></li>
       <li ng-if="!isLogin" ng-class='{"feature-active" : isActive("/login")}'><a href="" ng-click='gotoUrl("/login")'>Login</a></li>
       <li ng-if="!isLogin" ng-class='{"feature-active" : isActive("/register")}'><a href="" ng-click='gotoUrl("/register")'>Register</a></li>
@@ -34,3 +34,4 @@
 <!-- Included here since nav-bar is the only html page that is present throught out the application. -->
 <div ng-include="'views/partials/utils/confirm_modal.html'" scope="" onload=""></div>
 <div ng-include="'views/partials/utils/alert_modal.html'" scope="" onload=""></div>
+<div ng-include="'views/partials/utils/delete_modal.html'" scope="" onload=""></div>

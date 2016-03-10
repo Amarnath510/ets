@@ -1,0 +1,71 @@
+<div>
+	<div class="container">
+		<div>
+			<div class="row padding-top-20 font-16">
+				<h4 class="font-32 font-oxygen">Contact us</h4>
+				We are here to answer any questions you may have about our etoolstore experience. 
+				Reach out to us and we'll respond to your login email as soon as we can. 
+				Feedback/Complaints are most welcome. Please be specific.
+			</div>
+			<div class="row margin-top-20 text-center">
+				<div class="col-sm-4 col-md-offset-3">
+					<form id="contactForm" name="contactForm" ng-submit="contactSubmit()" method="POST" novalidate>
+						<div class="form-group">
+		                    <p for="contact_name" class="pull-left">Name<span class="red">*</span></p>
+		                    <input 
+		                    		type="text" 
+		                    		ng-model="contact_name" 
+		                    		class="form-control" 
+		                    		name="contact_name" 
+		                    		placeholder="Please enter name" 
+		                    		autofocus 
+		                    		ng-required="true"
+		                    />
+		                </div>
+		                <div class="form-group">
+		                    <p for="contact_email" class="pull-left">Email<span class="red">*</span></p>
+		                    <input 
+		                    	type="email" 
+	                    		ng-model="contact_email" 
+	                    		class="form-control" 
+	                    		name="contact_email" 
+	                    		placeholder="example@gmail.com" 
+	                    		ng-required="true"
+		                    />
+		                </div>
+		                <div class="form-group">
+		                    <p for="contact_name" class="pull-left">Message<span class="red">*</span></p>
+		                    <textarea class="form-control" 
+		                    		  rows="5" 
+		                    		  maxlength="200" 
+		                    		  id="comment" 
+		                    		  data-ng-model="comment"
+		                    		  ng-required="true">
+		                    </textarea> 
+		                    <span class="pull-right" ng-if="comment.length < 150">{{200 - comment.length}}</span>
+		                    <span class="pull-right red" ng-if="comment.length >= 150">{{200 - comment.length}}</span>
+		                </div>
+		                <div class="form-group">
+		                    <p for="verCode" class="pull-left">How much is 5 + 4?<span class="red">*</span></p>
+		                    <input 
+		                    		type="text" 
+		                    		ng-model="verCode" 
+		                    		class="form-control" 
+		                    		name="verCode" 
+		                    		placeholder="Please enter the above result here" 
+		                    		autofocus 
+		                    		ng-required="true"
+		                    />
+		                </div>
+		                <span class="red">{{contactMsg}}</span>
+		                <div class="margin-top-10">
+		                	<button type="submit" class="btn btn-success btn-lg">
+								SEND &nbsp <span class="glyphicon glyphicon-ok"></span>
+							</button>	
+		                </div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
