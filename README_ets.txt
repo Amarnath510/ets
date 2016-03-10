@@ -302,3 +302,27 @@ body {
 			If you have any local changes which you don't want and want to rever them back then 
 				git reset --hard <old-commit-id> (old-commit-id is not mandatory.)
 		- git pull origin master
+
+- How to run the server forever?
+	* To run the server forever we need to install forever. npm install forever -g 
+	* To check installed version, npm forever --version
+	* To start the server running for ever do, sudo forever start server.js (goto server.js folder)
+	* To check what all are running using forever do, sudo forever list
+	* To stop forever do, sudo forever stop 0
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+		

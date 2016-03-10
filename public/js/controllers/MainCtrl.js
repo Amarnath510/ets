@@ -98,17 +98,19 @@ angular.module('MainCtrl', []).controller('MainController',
 		var user = new Object();
 		user.username = uname;
 		user.password = pwd;
-
+		
+		$scope.login_loading = true;
 		loginFactory.UserLogin.save({}, user, function(response) {
 			if(response.result === clientProperties.getFailure()) {
 				$scope.login_failed_error = true;
-				$scope.login_failed_error_msg = clientProperties.getMsgWrongCredentials();							
+				$scope.login_failed_error_msg = clientProperties.getMsgWrongCredentials();
 			} else {
 				// set username in the service and then close the login modal.
 				loginService.setLoginStatus(true);
 				loginService.setUserName($scope.username_data);
 				$location.url('/services');
 			}
+			$scope.login_loading = false;
 		});
 	};
 
@@ -125,6 +127,7 @@ angular.module('MainCtrl', []).controller('MainController',
 			user.username = uname;
 			user.password = pwd;
 
+			$scope.register_loading = true;
 			loginFactory.UserRegistration.save({}, user, function(status) {
 				if(status.result === clientProperties.getUserExists()) {
 					$scope.registration_failed_error = true;
@@ -138,6 +141,7 @@ angular.module('MainCtrl', []).controller('MainController',
 					loginService.setUserName($scope.regis_uname_data);
 					$location.url('/services');
 				}
+				$scope.register_loading = false;
 			});
 		}
 	};
