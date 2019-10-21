@@ -12,7 +12,7 @@
     "formidable": "^1.0.17",
     "jade": "~1.11.0",
     "log4js": "^0.6.29",
-    "method-override": "~2.0.2",
+    "method-override": "~3.0.0",
     "mongoose": "~3.8.0",
     "sendgrid": "^2.0.0",
     "twilio": "^2.9.0"
